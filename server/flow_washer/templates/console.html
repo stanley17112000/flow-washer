@@ -1,0 +1,88 @@
+<html>
+	<head>
+ <meta http-equiv="refresh" content="15" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"  crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+	</head>
+	<body align="center" style="margin-left:10%; margin-right:10%; margin-top:10%">
+		<h1>Console Page</h1>
+
+		<h3>正在運行中</h3>
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">網址</th>
+		      <th scope="col">目前次數</th>
+		      <th scope="col">目標次數</th>
+		      <th scope="col">刪除任務</th>
+		    </tr>
+		  </thead>	
+		  <tbody>
+		    {% for task in task_list %}
+			<tr>
+		      <th scope="row">{{ task.id }}</th>
+		      <td>{{task.url}}</td>
+		      <td>{{task.now}}</td>
+		      <td>{{task.target}}</td>
+		      <td><button class="btn-danger" onclick="deleteTask({{task.id}})">刪除</button></td>
+			</tr>
+		    {% endfor %}
+		  </tbody>
+		</table>
+		<h3>新增任務</h3>	
+		<form>
+		  <div class="form-group">
+		    <label for="url">目標網址</label>
+		    <input type="text" class="form-control" id="url" placeholder="目標網址">
+		  </div>
+		  <div class="form-group">
+		    <label for="count">觀看次數</label>
+		    <input type="number" class="form-control" id="count" placeholder="次數">
+		  </div>
+		  <button id="start" class="btn btn-primary">新增</button>
+		</form>
+
+		<script>
+			function deleteTask( id ){
+				$.ajax({
+					url: 'http://35.198.197.21:8000/deleteTask',
+					data: { 'id' : id },
+				        success: function( result ){
+						if ( result == 'Success' ){
+							window.location.reload();
+						}
+						else{
+							alert( 'Failed' )
+						}
+
+					}	
+				})
+			}
+			$('#start').click( addTask )
+			function addTask(){
+
+				var url = $('#url').val();
+				var count = $('#count').val();
+				$.ajax({
+					url: 'http://35.198.197.21:8000/addTask',
+					data: { 'url' : url, 'count' : count },
+				        success: function( result ){
+						if ( result == 'Success' ){
+							window.location.reload();
+						}
+						else{
+							alert( 'Failed' )
+						}
+
+					}	
+				})
+
+			}
+		$('form').submit(false);
+		</script>
+	</body>
+	
+</html>

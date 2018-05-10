@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"  crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+	</head>
+	<body align="center" style="margin-left:10%; margin-right:10%; margin-top:10%">
+		<h1>Online Flow checker</h1>
+		<form>
+		  <div class="form-group">
+		    <label for="exampleInputPassword1">Password</label>
+		    <input type="password" class="form-control" id="password" placeholder="Password">
+		  </div>
+		  <button id="start" class="btn btn-primary">Start</button>
+		</form>
+
+		<script>
+			$('#start').click( checkPassword )
+			function checkPassword(){
+
+				var hashed = $('#password').val();
+				$.ajax({
+					url: 'http://35.198.197.21:8000/checkPassword',
+					data: { 'password' : hashed },
+				        success: function( result ){
+						if ( result == 'Yes' ){
+							window.location.href = "http://35.198.197.21:8000/console";
+						}
+						else{
+							alert( 'Wrong Password' )
+						}
+
+					}	
+				})
+
+			}
+		$('form').submit(false);
+		</script>
+	</body>
+	
+</html>
