@@ -14,7 +14,8 @@ task_list = {}
 todo_list = [ '/home/stanley/udnserver/phantomjs', '/home/stanley/udnserver/test.js' , '' ]
 
 def index( request ):
-    return render(request, 'index.html')
+    view_data = {'my_ip':'127.0.0.1'}
+    return render(request, 'index.html', view_data )
 
 def checkPassword( request ):
     pwd = request.GET.get('password', '')
@@ -46,11 +47,13 @@ def addTask(request):
         return HttpResponse( 'Failed' )
 
 def console( request ):
+    view_data = {'my_ip':'127.0.0.1'}
+    
     if 'secret' in request.session and request.session['secret'] == 'asjldkfjlsdfjinksdn2131hjlkj':
         toShow = list( task_list.values() )
         return render(request, 'console.html', {'task_list':toShow} )
     else:
-        return render( request, 'index.html' )
+        return render( request, 'index.html', view_data )
 def background_process( id ):
     global todo_list 
     run = True
