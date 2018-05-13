@@ -48,7 +48,7 @@
 		<script>
 			function deleteTask( id ){
 				$.ajax({
-					url: 'http://35.198.197.21:8000/deleteTask',
+					url: 'http://{{ my_ip }}/deleteTask',
 					data: { 'id' : id },
 				        success: function( result ){
 						if ( result == 'Success' ){
@@ -67,7 +67,7 @@
 				var url = $('#url').val();
 				var count = $('#count').val();
 				$.ajax({
-					url: 'http://35.198.197.21:8000/addTask',
+					url: 'http://{{ my_ip }}/addTask',
 					data: { 'url' : url, 'count' : count },
 				        success: function( result ){
 						if ( result == 'Success' ){
